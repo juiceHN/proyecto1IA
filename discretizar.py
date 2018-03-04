@@ -8,6 +8,12 @@ def imageSize(image):
 	return width, height
 
 
+def imageResize(image):
+	im = Image.open(image)
+	new_image = im.resize((400,400))
+	new_image.save('resizedImg.png')
+
+
 # funcion para obtener el color popular en un area seleccionada
 # image= nombre del archivo
 # x0, y0 = coordenadas de donde se quiere emepzar a analizar
@@ -29,11 +35,12 @@ def getColors(image, x0, y0, mode):
 		size=20
 
 	im = Image.open(image)
-	rgb_im = im.convert('RGB')
+	resizedImg = im.resize((400,400))
+	rgb_im = resizedImg.convert('RGB')
 	for i in range(size):
 		for j in range (size):
 			r, g, b =  rgb_im.getpixel((i+x0, j+y0))
-			print(r,g,b)
+			# print(r,g,b)
 			if r>=240 and g >= 240 and b >= 240:
 				arrayW+=1
 			elif r<=50 and g <= 50 and b <= 50:
@@ -68,7 +75,7 @@ print("Color popular: ",color)
 
 # funcion para hacer un array de colores random para pruebas
 
-def fillRandomColors:
+def fillRandomColors():
 	colores=[]
 	qq=0
 	while qq < 400:
@@ -89,7 +96,7 @@ def fillRandomColors:
 # 1 = cuadricula de 10 x 10 de 40 px
 # 2 = cuadricula de 20 x 20 de 20 px
 
-def outputImage(mode):
+def outputImage(mode,colores):
 	if mode == 1:
 		size=40
 		nsqr=10
@@ -107,8 +114,25 @@ def outputImage(mode):
 
 
 
+def myMaze(image, mode):
+	colorArray = []
+	if mode == 1:
+		times=10
+		size=40
+	elif mode == 2:
+		times=20
+		size=20
 
+	for i in range (times):
+		for j in range (times):
+			color=getColors(image,0+(i*size),0+(j*size),mode)
+			print (color)
+			colorArray.append(color)
+
+	outputImage(mode, colorArray)
+
+myMaze('test.bmp', 2)
 # outputImage(2)
-
-www = getColors('Output.png',0,320,1 )
-print (www)
+# imageResize('test.bmp')
+#www = getColors('Output.png',0,320,1 )
+#print (www)

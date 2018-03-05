@@ -227,7 +227,6 @@ def BreathFirstSearch(array, locR,sizeN):
 	cont=0
 	# cont < 4 start == False
 	while start == False:
-		print(cont)
 		u,r,d,l = action(frontier[0], array, sizeN)
 		if u == True:
 			up = frontier[0] - sizeSqr
@@ -274,11 +273,6 @@ def BreathFirstSearch(array, locR,sizeN):
 		if len(frontier)==0:
 			start=True
 
-
-		cont+=1
-		if cont > 1000:
-			start = True
-
 	for i in range(len(explored)):
 		space=explored[i]
 		array[space]='orange'
@@ -298,40 +292,7 @@ def DepthFirstSearch(array, locR,sizeN):
 	while start == False:
 		print(cont)
 		u,r,d,l = action(frontier[0], array, sizeN)
-		if u == True:
-			while u==True:
-				u,r,d,l = action(frontier[0], array, sizeN)
-				up = frontier[0] - sizeSqr
-				start=goalTest(up, array)
-				if array[up] == 'black':
-					u = False
-				print('up= ', str(up))
-				if array[up] == 'white':
-					if up not in explored:
-						frontier.append(up) 
-						explored.append(up)
-						frontier.pop(0)
-			if r == True:
-				while r == True:
-					u,r,d,l = action(frontier[0], array, sizeN)
-					right = frontier[0] + 1
-					start=goalTest(up, array)
-					if u == True:
-						up = frontier[0] - sizeSqr
-						if array[up] == 'white':
-							r=False
-					print('right= ', str(right))
-					if array[right] == 'white':
-						if right not in explored:
-							frontier.append(right)
-							explored.append(right)
-							frontier.pop(0)
-
-		if len(frontier)>0:
-			frontier.pop(0)
-			print (frontier)
-			#start=goalTest(frontier[0], array)
-
+		
 		if len(frontier)==0:
 			start=True
 
@@ -339,7 +300,7 @@ def DepthFirstSearch(array, locR,sizeN):
 		cont+=1
 		if cont > 1000:
 			start = True
-
+	print(explored)
 	for i in range(len(explored)):
 		space=explored[i]
 		array[space]='orange'
@@ -368,12 +329,12 @@ def myMaze(image, sizeN):
 	print(locR, locG)
 
 	if green == True and red == True:
-		#solutioArray = BreathFirstSearch(colorArray, locR, sizeN)
+		solutioArray = BreathFirstSearch(colorArray, locR, sizeN)
 		colorArray[locR]='red'
-		#outputImage(sizeN, solutioArray, 'BFS')
-		solutioArray = DepthFirstSearch(colorArray, locR, sizeN)
+		outputImage(sizeN, solutioArray, 'BFS')
+		#solutioArray = DepthFirstSearch(colorArray, locR, sizeN)
 		colorArray[locR]='red'
-		outputImage(sizeN, solutioArray, 'DFS')
+		#outputImage(sizeN, solutioArray, 'DFS')
 		#a,b,c,d=move(locR,colorArray,sizeN)
 		#print(a,b,c,d)
 	elif green == False and red == True:
@@ -386,8 +347,6 @@ def myMaze(image, sizeN):
 		print("No other color other than black and white were found on the maze")
 		outputImage(sizeN, colorArray, 'Output')
 
-
-'''
 
 fin='si'
 while fin == 'si':
@@ -407,6 +366,7 @@ while fin == 'si':
 		print('########################')
 		print('Breadth First Search')
 		print('########################')
+		myMaze(imagen, 20)
 	elif tipo == 2:
 		print('########################')
 		print('Depth First Search')
@@ -417,9 +377,7 @@ while fin == 'si':
 		print('########################')
 	else:
 		print('opcion incorrecta')
-'''
-	
-myMaze('test.bmp', 20)
+
 #aaa=['white','white','white','white','white','white','white','white','white','white','white','white']
 #u,r,d,l=borders(10)
 #print(u,r,d,l)
